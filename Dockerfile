@@ -1,5 +1,5 @@
 # VERSION 1.0
-# AUTHOR: Matthieu "Puckel_" Roisil
+# AUTHOR: Matthieu "Puckel_" Roisil + LCY Modified
 # DESCRIPTION: Basic Airflow container
 # BUILD: docker build --rm -t puckel/docker-airflow
 # SOURCE: https://github.com/puckel/docker-airflow
@@ -18,19 +18,20 @@ ENV AIRFLOW_HOME /usr/local/airflow
 ENV C_FORCE_ROOT true
 ENV PYTHONLIBPATH /usr/lib/python2.7/dist-packages
 
-RUN apt-get update -yqq \
-    && apt-get install -yqq --no-install-recommends \
+RUN apt-get update -y
+RUN apt-get install -y --no-install-recommends \
     netcat \
     python-pip \
     python-dev \
     libmysqlclient-dev \
     libkrb5-dev \
     libsasl2-dev \
+    libpq-dev \
     build-essential \
     && mkdir -p $AIRFLOW_HOME/logs \
     && mkdir $AIRFLOW_HOME/dags \
     && pip install --install-option="--install-purelib=$PYTHONLIBPATH" airflow==$AIRFLOW_VERSION \
-    && pip install --install-option="--install-purelib=$PYTHONLIBPATH" airflow[mysql]==$AIRFLOW_VERSION \
+    && pip install --install-option="--install-purelib=$PYTHONLIBPATH" airflow[postgres]==$AIRFLOW_VERSION \
     && apt-get clean \
     && rm -rf \
     /var/lib/apt/lists/* \
@@ -40,7 +41,7 @@ RUN apt-get update -yqq \
     /usr/share/doc \
     /usr/share/doc-base
 
-ADD config/airflow.cfg $AIRFLOW_HOME/airflow.cfg
+ONBUILD ADD config/airflow.cfg $AIRFLOW_HOME/airflow.cfg
 ADD script/entrypoint.sh /root/entrypoint.sh
 RUN chmod +x /root/entrypoint.sh
 

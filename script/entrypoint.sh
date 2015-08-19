@@ -3,10 +3,10 @@
 CMD="airflow"
 
 if [ "$@" = "webserver" ]; then
-  #wait for mysql
+  #wait for postgres
   DB_LOOPS="20"
-  MYSQL_HOST="mysqldb"
-  MYSQL_PORT="3306"
+  MYSQL_HOST="postgres"
+  MYSQL_PORT="5432"
   i=0
   while ! nc $MYSQL_HOST $MYSQL_PORT >/dev/null 2>&1 < /dev/null; do
     i=`expr $i + 1`
@@ -17,8 +17,9 @@ if [ "$@" = "webserver" ]; then
     echo "$(date) - waiting for ${MYSQL_HOST}:${MYSQL_PORT}..."
     sleep 1
   done
-  sleep 15
+  echo "InitDB"
   $CMD initdb
 fi
 
-exec $CMD "$@"
+echo "Executing command $CMD $@"
+exec $CMD "$@" --debug
