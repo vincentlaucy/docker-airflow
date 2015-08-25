@@ -31,7 +31,7 @@ RUN apt-get install -y --no-install-recommends \
     build-essential \
     && mkdir -p $AIRFLOW_HOME/logs \
     && mkdir $AIRFLOW_HOME/dags \
-    && pip install --install-option="--install-purelib=$PYTHONLIBPATH" git+git://github.com/airbnb/airflow.git@$AIRFLOW_COMMIT \
+    && pip install --install-option="--install-purelib=$PYTHONLIBPATH" git+https://github.com/airbnb/airflow.git@$AIRFLOW_COMMIT \
     && pip install --install-option="--install-purelib=$PYTHONLIBPATH" airflow[postgres]==$AIRFLOW_VERSION \
     && apt-get clean \
     && rm -rf \
