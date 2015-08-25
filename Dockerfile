@@ -14,6 +14,7 @@ ENV TERM linux
 ENV INITRD No
 
 ENV AIRFLOW_VERSION 1.4.0
+ENV AIRFLOW_COMMIT aa0dffdb7b735c0e95fba61583e933aa68abcc37
 ENV AIRFLOW_HOME /usr/local/airflow
 ENV C_FORCE_ROOT true
 ENV PYTHONLIBPATH /usr/lib/python2.7/dist-packages
@@ -30,7 +31,7 @@ RUN apt-get install -y --no-install-recommends \
     build-essential \
     && mkdir -p $AIRFLOW_HOME/logs \
     && mkdir $AIRFLOW_HOME/dags \
-    && pip install --install-option="--install-purelib=$PYTHONLIBPATH" airflow==$AIRFLOW_VERSION \
+    && pip install --install-option="--install-purelib=$PYTHONLIBPATH" git+git://github.com/airbnb/airflow.git@$AIRFLOW_COMMI \
     && pip install --install-option="--install-purelib=$PYTHONLIBPATH" airflow[postgres]==$AIRFLOW_VERSION \
     && apt-get clean \
     && rm -rf \
