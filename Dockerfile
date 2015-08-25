@@ -18,6 +18,7 @@ ENV AIRFLOW_COMMIT aa0dffdb7b735c0e95fba61583e933aa68abcc37
 ENV AIRFLOW_HOME /usr/local/airflow
 ENV C_FORCE_ROOT true
 ENV PYTHONLIBPATH /usr/lib/python2.7/dist-packages
+ENV GIT_SSL_NO_VERIFY true
 
 RUN apt-get update -y
 RUN apt-get install -y --no-install-recommends \
