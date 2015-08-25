@@ -29,6 +29,7 @@ RUN apt-get install -y --no-install-recommends \
     libsasl2-dev \
     libpq-dev \
     build-essential \
+    git \
     && mkdir -p $AIRFLOW_HOME/logs \
     && mkdir $AIRFLOW_HOME/dags \
     && pip install --install-option="--install-purelib=$PYTHONLIBPATH" git+https://github.com/airbnb/airflow.git@$AIRFLOW_COMMIT \
