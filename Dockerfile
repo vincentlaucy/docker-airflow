@@ -33,8 +33,6 @@ RUN apt-get install -y --no-install-recommends \
     git \
     && mkdir -p $AIRFLOW_HOME/logs \
     && mkdir $AIRFLOW_HOME/dags \
-    && pip install --install-option="--install-purelib=$PYTHONLIBPATH" airflow[postgres]==$AIRFLOW_VERSION \
-    && pip install --install-option="--install-purelib=$PYTHONLIBPATH" git+https://github.com/airbnb/airflow.git@$AIRFLOW_COMMIT \
     && apt-get clean \
     && rm -rf \
     /var/lib/apt/lists/* \
@@ -43,6 +41,8 @@ RUN apt-get install -y --no-install-recommends \
     /usr/share/man \
     /usr/share/doc \
     /usr/share/doc-base
+
+ RUN git clone git://github.com/airbnb/airflow.git && cd airflow && git reset --hard $AIRFLOW_COMMIT && pip install -e .[postgres]
 
 ONBUILD ADD config/airflow.cfg $AIRFLOW_HOME/airflow.cfg
 ADD script/entrypoint.sh /root/entrypoint.sh
