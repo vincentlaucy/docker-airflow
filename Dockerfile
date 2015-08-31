@@ -46,7 +46,7 @@ RUN apt-get install -y --no-install-recommends \
  RUN git clone git://github.com/airbnb/airflow.git && cd airflow \
     && git reset --hard $AIRFLOW_COMMIT && git checkout 8a8b9db76c11ff9040a972136a3c51b9499c8885 airflow/configuration.py && pip install .[postgres]
 
-ONBUILD ADD config/airflow.cfg $AIRFLOW_HOME/airflow.cfg
+ADD config/airflow.cfg $AIRFLOW_HOME/airflow.cfg
 ADD script/entrypoint.sh /root/entrypoint.sh
 RUN chmod +x /root/entrypoint.sh
 
@@ -54,4 +54,4 @@ EXPOSE 8080
 EXPOSE 5555
 EXPOSE 8793
 
-ENTRYPOINT ["/root/entrypoint.sh"]
+CMD ["airflow"]
