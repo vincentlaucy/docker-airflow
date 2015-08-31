@@ -44,8 +44,7 @@ RUN apt-get install -y --no-install-recommends \
     /usr/share/doc-base
  RUN pip install --upgrade pip
  RUN git clone git://github.com/airbnb/airflow.git && cd airflow \
-    && git reset --hard $AIRFLOW_COMMIT && git checkout 8a8b9db76c11ff9040a972136a3c51b9499c8885 airflow/configuration.py
- RUN pip install .[postgres]
+    && git reset --hard $AIRFLOW_COMMIT && git checkout 8a8b9db76c11ff9040a972136a3c51b9499c8885 airflow/configuration.py && pip install .[postgres]
 
 ONBUILD ADD config/airflow.cfg $AIRFLOW_HOME/airflow.cfg
 ADD script/entrypoint.sh /root/entrypoint.sh
