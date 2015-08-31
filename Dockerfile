@@ -31,6 +31,7 @@ RUN apt-get install -y --no-install-recommends \
     libpq-dev \
     build-essential \
     git \
+    vim \
     && mkdir -p $AIRFLOW_HOME/logs \
     && mkdir $AIRFLOW_HOME/dags \
     && apt-get clean \
