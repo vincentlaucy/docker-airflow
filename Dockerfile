@@ -13,8 +13,8 @@ ENV TERM linux
 # Work around initramfs-tools running on kernel 'upgrade': <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=594189>
 ENV INITRD No
 
-ENV AIRFLOW_VERSION 1.4.0
-ENV AIRFLOW_COMMIT efd9e4c4f5dc413308fa958a8038240a38840f67
+ENV AIRFLOW_VERSION 1.5.1
+ENV AIRFLOW_COMMIT bf9b18322fe3ebcd962c05b3e9d326396b7184d7
 ENV AIRFLOW_HOME /usr/local/airflow
 ENV C_FORCE_ROOT true
 ENV PYTHONLIBPATH /usr/lib/python2.7/dist-packages
@@ -44,8 +44,9 @@ RUN apt-get install -y --no-install-recommends \
     /usr/share/doc-base
  RUN pip install --upgrade setuptools && pip install --upgrade pip
  RUN git clone git://github.com/airbnb/airflow.git && cd airflow \
-    && git reset --hard $AIRFLOW_COMMIT && git checkout 8a8b9db76c11ff9040a972136a3c51b9499c8885 airflow/configuration.py \
+    && git reset --hard $AIRFLOW_COMMIT \ 
     && pip install .[postgres] && pip install flask_admin==1.2.0
+ RUN pip install awscli
 
 ADD config/airflow.cfg $AIRFLOW_HOME/airflow.cfg
 ADD script/entrypoint.sh /root/entrypoint.sh
